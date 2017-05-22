@@ -89,6 +89,8 @@ trait ModelTrait
                 'getAttribute',
                 'getAttributeLabel',
                 'getOldAttribute',
+                'getTypeValueLabel',
+                'getAttributeHint'
             ];
             if (in_array($method->name, $skipMethods)) {
                 continue;
