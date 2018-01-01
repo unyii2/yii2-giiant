@@ -241,6 +241,7 @@ class Generator extends \yii\gii\generators\model\Generator
     {
         $files = [];
         $relations = $this->generateRelations();
+        $newRelRecord = $this->generateNewChild($relations);
         $db = $this->getDbConnection();
 
         foreach ($this->getTableNames() as $tableName) {
@@ -261,7 +262,8 @@ class Generator extends \yii\gii\generators\model\Generator
                 'labels' => $this->generateLabels($tableSchema),
                 'hints' => $this->generateHints($tableSchema),
                 'rules' => $this->generateRules($tableSchema),
-                'relations' => isset($relations[$tableName]) ? $relations[$tableName] : [],
+                'relations' => $relations[$tableName] ?? [],
+                'newRelRecord' => $newRelRecord[$tableName] ?? [],
                 'ns' => $this->ns,
                 'enum' => $this->getEnum($tableSchema->columns),
             ];
@@ -436,6 +438,32 @@ class Generator extends \yii\gii\generators\model\Generator
         }
 
         return $relations;
+    }
+
+    /**
+     * @return array the generated relation declarations
+     */
+    protected function generateNewChild($relations)
+    {
+        $newChild = [];
+        foreach ($relations as $model => $relInfo) {
+            foreach ($relInfo as $relName => list($php, $className, $relType)){
+                if (!$relType) {
+                    continue;
+                }
+                if (!preg_match("#'([^']+)'[^']+'([^']+)'#", $php, $match)) {
+                    continue;
+                }
+                $newChild[$model][$relName] = [
+                    'class' => $className,
+                    'pkFieldName' => $match[1],
+                    'relFieldName' => $match[2],
+                ];
+            }
+        }
+
+        return $newChild;
+
     }
 
     /**

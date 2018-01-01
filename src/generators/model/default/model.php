@@ -15,6 +15,7 @@ use yii\helpers\StringHelper;
  * @var string[] $labels list of attribute labels (name => label)
  * @var string[] $rules list of validation rules
  * @var array $relations list of relations (name => relation declaration)
+ * @var array $newRelRecord
  */
 
 echo "<?php\n";
@@ -176,6 +177,19 @@ if(!empty($enum)){
     }
 <?php endforeach; ?>
 
+<?php foreach ($newRelRecord as $name => $newData): ?>
+
+    /**
+     * @return <?= $newData['relFieldName'] ?>
+     */
+    public function new<?= $name ?>()
+    {
+        $model = new <?= $newData['class'] ?>;
+        $model-><?= $newData['relFieldName'] ?> = $this-><?= $newData['pkFieldName'] ?>;
+        return $model;
+    }
+<?php endforeach; ?>
+
 <?php if (isset($translation)): ?>
     /**
      * @return \yii\db\ActiveQuery
@@ -241,5 +255,10 @@ if(!empty($enum)){
 
 
 ?>
-
+    public function save($runValidation = true, $attributeNames = null)
+    {
+        if(!parent::save($runValidation, $attributeNames)){
+            throw new \Exception(Yii::t(json_encode($this->getErrors())));
+        }
+    }
 }

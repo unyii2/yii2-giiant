@@ -398,18 +398,18 @@ class Generator extends \yii\gii\generators\crud\Generator
     public function render($template, $params = [])
     {
         $code = parent::render($template, $params);
-        if ($this->tidyOutput) {
-            $tmpDir = Yii::getAlias('@runtime/giiant');
-            FileHelper::createDirectory($tmpDir);
-            $tmpFile = $tmpDir.'/'.md5($template);
-            file_put_contents($tmpFile, $code);
-            $command = Yii::getAlias('@vendor/bin/phptidy').' replace '.$tmpFile;
-            shell_exec($command);
-
-            return file_get_contents($tmpFile);
-        } else {
+//        if ($this->tidyOutput) {
+//            $tmpDir = Yii::getAlias('@runtime/giiant');
+//            FileHelper::createDirectory($tmpDir);
+//            $tmpFile = $tmpDir.'/'.md5($template);
+//            file_put_contents($tmpFile, $code);
+//            $command = Yii::getAlias('@vendor/bin/phptidy').' replace '.$tmpFile;
+//            shell_exec($command);
+//
+//            return file_get_contents($tmpFile);
+//        } else {
             return $code;
-        }
+//        }
     }
 
     public function validateClass($attribute, $params)

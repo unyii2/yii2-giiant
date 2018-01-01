@@ -90,7 +90,9 @@ trait ModelTrait
                 'getAttributeLabel',
                 'getOldAttribute',
                 'getTypeValueLabel',
-                'getAttributeHint'
+                'getAttributeHint',
+                'getWashedValueLabel',
+                'getIsLoadedValueLabel'
             ];
             if (in_array($method->name, $skipMethods)) {
                 continue;
