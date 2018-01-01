@@ -454,8 +454,9 @@ class Generator extends \yii\gii\generators\model\Generator
                 if (!preg_match("#'([^']+)'[^']+'([^']+)'#", $php, $match)) {
                     continue;
                 }
+                preg_match('/has[A-Za-z0-9]+\(([a-zA-Z0-9\\\\]+)::/',$php,$matchFullClassName);
                 $newChild[$model][$relName] = [
-                    'class' => $className,
+                    'class' => $matchFullClassName[1],
                     'pkFieldName' => $match[1],
                     'relFieldName' => $match[2],
                 ];

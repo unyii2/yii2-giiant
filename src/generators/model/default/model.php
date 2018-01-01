@@ -26,6 +26,7 @@ echo "<?php\n";
 namespace <?= $generator->ns ?>\base;
 
 use Yii;
+use yii\db\Exception;
 <?php if (isset($translation)): ?>
 use dosamigos\translateable\TranslateableBehavior;
 <?php endif; ?>
@@ -177,15 +178,20 @@ if(!empty($enum)){
     }
 <?php endforeach; ?>
 
-<?php foreach ($newRelRecord as $name => $newData): ?>
+<?php
+//dump($newRelRecord);die();
+foreach ($newRelRecord as $name => $newData): ?>
 
     /**
-     * @return <?= $newData['relFieldName'] ?>
+     * @return <?= $newData['class'] ?>
      */
     public function new<?= $name ?>()
     {
-        $model = new <?= $newData['class'] ?>;
-        $model-><?= $newData['relFieldName'] ?> = $this-><?= $newData['pkFieldName'] ?>;
+        if ($this->getIsNewRecord()){
+            throw new Exception('Can not create new related record for new record!');
+        }
+        $model = new <?= $newData['class'] ?>();
+        $model-><?= $newData['pkFieldName'] ?> = $this-><?= $newData['relFieldName'] ?>;
         return $model;
     }
 <?php endforeach; ?>
@@ -255,10 +261,10 @@ if(!empty($enum)){
 
 
 ?>
-    public function save($runValidation = true, $attributeNames = null)
+    public function saveOrException($runValidation = true, $attributeNames = null)
     {
         if(!parent::save($runValidation, $attributeNames)){
-            throw new \Exception(Yii::t(json_encode($this->getErrors())));
+            throw new Exception(json_encode($this->getErrors()));
         }
     }
 }

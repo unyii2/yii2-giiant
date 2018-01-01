@@ -335,7 +335,7 @@ class Generator extends \yii\gii\generators\crud\Generator
         $params['controllerClassName'] = \yii\helpers\StringHelper::basename($this->controllerClass);
 
         if ($this->overwriteControllerClass || !is_file($controllerFile)) {
-            $files[] = new CodeFile($controllerFile, $this->render('controller-extended.php', $params));
+            $files[] = new CodeFile($controllerFile, $this->render('controller-extended.php', ['accessDefinitions' => $accessDefinitions]));
         }
 
         if ($this->overwriteRestControllerClass || !is_file($restControllerFile)) {
