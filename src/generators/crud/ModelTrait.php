@@ -89,12 +89,12 @@ trait ModelTrait
                 'getAttribute',
                 'getAttributeLabel',
                 'getOldAttribute',
-                'getTypeValueLabel',
                 'getAttributeHint',
-                'getWashedValueLabel',
-                'getIsLoadedValueLabel'
             ];
             if (in_array($method->name, $skipMethods)) {
+                continue;
+            }
+            if ($method->getParameters()) {
                 continue;
             }
             // check for relation
