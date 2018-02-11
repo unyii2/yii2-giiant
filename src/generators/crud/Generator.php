@@ -256,7 +256,7 @@ class Generator extends \yii\gii\generators\crud\Generator
             'template',
             'accessFilter',
             'singularEntities',
-            'modelMessageCategory',
+            'modelMessageCategory'
             ];
     }
 
@@ -398,7 +398,7 @@ class Generator extends \yii\gii\generators\crud\Generator
     public function render($template, $params = [])
     {
         $code = parent::render($template, $params);
-        if ($this->tidyOutput) {
+        if (false && $this->tidyOutput) {
             $tmpDir = Yii::getAlias('@runtime/giiant');
             FileHelper::createDirectory($tmpDir);
             $tmpFile = $tmpDir.'/'.md5($template);
