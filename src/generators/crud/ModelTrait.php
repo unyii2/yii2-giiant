@@ -89,8 +89,12 @@ trait ModelTrait
                 'getAttribute',
                 'getAttributeLabel',
                 'getOldAttribute',
+                'getAttributeHint',
             ];
             if (in_array($method->name, $skipMethods)) {
+                continue;
+            }
+            if ($method->getParameters()) {
                 continue;
             }
             // check for relation

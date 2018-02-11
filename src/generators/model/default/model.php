@@ -15,6 +15,7 @@ use yii\helpers\StringHelper;
  * @var string[] $labels list of attribute labels (name => label)
  * @var string[] $rules list of validation rules
  * @var array $relations list of relations (name => relation declaration)
+ * @var array $newRelRecord
  */
 
 echo "<?php\n";
@@ -25,6 +26,7 @@ echo "<?php\n";
 namespace <?= $generator->ns ?>\base;
 
 use Yii;
+use yii\db\Exception;
 <?php if (isset($translation)): ?>
 use dosamigos\translateable\TranslateableBehavior;
 <?php endif; ?>
@@ -176,6 +178,24 @@ if(!empty($enum)){
     }
 <?php endforeach; ?>
 
+<?php
+//dump($newRelRecord);die();
+foreach ($newRelRecord as $name => $newData): ?>
+
+    /**
+     * @return <?= $newData['class'] ?>
+     */
+    public function new<?= $name ?>()
+    {
+        if ($this->getIsNewRecord()){
+            throw new Exception('Can not create new related record for new record!');
+        }
+        $model = new <?= $newData['class'] ?>();
+        $model-><?= $newData['pkFieldName'] ?> = $this-><?= $newData['relFieldName'] ?>;
+        return $model;
+    }
+<?php endforeach; ?>
+
 <?php if (isset($translation)): ?>
     /**
      * @return \yii\db\ActiveQuery
@@ -241,5 +261,10 @@ if(!empty($enum)){
 
 
 ?>
-
+    public function saveOrException($runValidation = true, $attributeNames = null)
+    {
+        if(!parent::save($runValidation, $attributeNames)){
+            throw new Exception(json_encode($this->getErrors()));
+        }
+    }
 }

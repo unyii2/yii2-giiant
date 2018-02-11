@@ -335,7 +335,7 @@ class Generator extends \yii\gii\generators\crud\Generator
         $params['controllerClassName'] = \yii\helpers\StringHelper::basename($this->controllerClass);
 
         if ($this->overwriteControllerClass || !is_file($controllerFile)) {
-            $files[] = new CodeFile($controllerFile, $this->render('controller-extended.php', $params));
+            $files[] = new CodeFile($controllerFile, $this->render('controller-extended.php', ['accessDefinitions' => $accessDefinitions]));
         }
 
         if ($this->overwriteRestControllerClass || !is_file($restControllerFile)) {
@@ -398,18 +398,8 @@ class Generator extends \yii\gii\generators\crud\Generator
     public function render($template, $params = [])
     {
         $code = parent::render($template, $params);
-        if (false && $this->tidyOutput) {
-            $tmpDir = Yii::getAlias('@runtime/giiant');
-            FileHelper::createDirectory($tmpDir);
-            $tmpFile = $tmpDir.'/'.md5($template);
-            file_put_contents($tmpFile, $code);
-            $command = Yii::getAlias('@vendor/bin/phptidy').' replace '.$tmpFile;
-            shell_exec($command);
 
-            return file_get_contents($tmpFile);
-        } else {
             return $code;
-        }
     }
 
     public function validateClass($attribute, $params)
