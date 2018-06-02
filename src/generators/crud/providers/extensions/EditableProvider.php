@@ -94,8 +94,8 @@ EOS;
                         'ajaxSettings' => [
                             'url' => Url::to(['editable', '{$primaryKey}' => \$model->primaryKey]),
                         ],
-                        'data' => \yii\helpers\ArrayHelper::map({$relation->modelClass}::find()->all(), '{$relPk}', '{$relName}'),
-                        'displayValueConfig' => \yii\helpers\ArrayHelper::map({$relation->modelClass}::find()->all(), '{$relPk}', '{$relName}'),                            
+                        'data' => \yii\helpers\ArrayHelper::map({$relation->modelClass}::find()->limit(1000)->all(), '{$relPk}', '{$relName}'),
+                        'displayValueConfig' => \yii\helpers\ArrayHelper::map({$relation->modelClass}::find()->limit(1000)->all(), '{$relPk}', '{$relName}'),                            
                     ]),
 
                 ]
@@ -358,8 +358,8 @@ EOS;
                     ]
                 ],
                 'inputType' => Editable::INPUT_DROPDOWN_LIST,
-                'data' => \yii\helpers\ArrayHelper::map({$relRelation->modelClass}::find()->all(), '{$relPk}', '{$relName}'),
-                'displayValueConfig' => \yii\helpers\ArrayHelper::map({$relRelation->modelClass}::find()->all(), '{$relPk}', '{$relName}'),
+                'data' => \yii\helpers\ArrayHelper::map({$relRelation->modelClass}::find()->limit(1000)->all(), '{$relPk}', '{$relName}'),
+                'displayValueConfig' => \yii\helpers\ArrayHelper::map({$relRelation->modelClass}::find()->limit(1000)->all(), '{$relPk}', '{$relName}'),
             ]
         ]";
             } elseif ($useOptsFunc) {
