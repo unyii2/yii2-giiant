@@ -89,18 +89,22 @@ trait ModelTrait
                 'getAttribute',
                 'getAttributeLabel',
                 'getOldAttribute',
+                'getAttributeHint',
             ];
             if (in_array($method->name, $skipMethods)) {
+                continue;
+            }
+            if ($method->getParameters()) {
                 continue;
             }
             // check for relation
             try {
                 $relation = @call_user_func(array($model, $method->name));
                 if ($relation instanceof \yii\db\ActiveQuery) {
-                    #var_dump($relation->primaryModel->primaryKey);
+                    //var_dump($relation->primaryModel->primaryKey);
                     if ($relation->multiple === false) {
                         $relationType = 'belongs_to';
-                    } elseif ($this->isPivotRelation($relation)) { # TODO: detecttion
+                    } elseif ($this->isPivotRelation($relation)) { // TODO: detecttion
                         $relationType = 'pivot';
                     } else {
                         $relationType = 'has_many';

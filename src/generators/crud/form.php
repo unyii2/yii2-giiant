@@ -1,12 +1,14 @@
 <?php
+
 use schmunk42\giiant\helpers\SaveForm;
-/**
+
+/*
  * @var yii\web\View
- * @var yii\widgets\ActiveForm            $form
- * @var yii\gii\generators\crud\Generator $generator
+ * @var yii\bootstrap\ActiveForm                   $form
+ * @var schmunk42\giiant\generators\crud\Generator $generator
  */
 
-/**
+/*
  * JS for listbox "Saved Form"
  * on chenging listbox, form fill with selected saved forma data
  * currently work with input text, input checkbox and select form fields
@@ -24,6 +26,7 @@ echo $form->field($generator, 'baseControllerClass');
 echo $form->field($generator, 'viewPath');
 echo $form->field($generator, 'pathPrefix');
 echo $form->field($generator, 'accessFilter')->checkbox();
+echo $form->field($generator, 'generateAccessFilterMigrations')->checkbox();
 echo $form->field($generator, 'enableI18N')->checkbox();
 echo $form->field($generator, 'messageCategory');
 echo $form->field($generator, 'modelMessageCategory');
@@ -37,7 +40,7 @@ echo $form->field($generator, 'indexWidgetType')->dropDownList(
 echo $form->field($generator, 'formLayout')->dropDownList(
         [
             /* Form Types */
-            'vertical' => 'vertical',
+            'default' => 'full-width',
             'horizontal' => 'horizontal',
             'inline' => 'inline',
         ]
@@ -47,4 +50,7 @@ echo $form->field($generator, 'actionButtonClass')->dropDownList(
             'yii\\grid\\ActionColumn' => 'Default',
         ]
 );
+
 echo $form->field($generator, 'providerList')->checkboxList($generator->generateProviderCheckboxListData());
+
+echo $form->field($generator, 'providerListPostHidded')->hiddenInput();
