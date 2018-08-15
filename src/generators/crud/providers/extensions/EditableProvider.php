@@ -381,6 +381,7 @@ EOS;
             } else {
                 $code = "
         [
+            [
             'class' => '\kartik\grid\EditableColumn',
             'attribute' => '{$attribute}',
             'editableOptions' => [
@@ -389,7 +390,9 @@ EOS;
                         '{$controller}/editable-column-update'
                     ]
                 ],
-                'inputType' => ".$inputType.'
+                'inputType' => " . $inputType . "
+                " . $this->getAlign($tableColumn) . "
+                " . $this->getDecimal($tableColumn) . "
             ]
         ]';
             }
@@ -402,8 +405,8 @@ EOS;
         }
 
         // action column
-        $columns .= "  
-        [
+        $columns .= "
+        [    
             'class' => '\kartik\grid\ActionColumn',
             'template' => '{view} {update} {delete}',
             'urlCreator' =>  
@@ -478,4 +481,29 @@ EOS;
 
         return $inputType;
     }
+
+    public function getAlign($column) {
+
+        switch ($column->type) {
+            case 'double':
+            case 'integer':
+            case 'bigint':
+            case 'smallint':
+            case 'decimal':
+            case 'float':
+                return "'hAlign' => 'right',";
+                break;
+
+        }
+        return '';
+    }
+
+    public function getDecimal($column) {
+
+        if ($column->type == 'decimal') {
+                return "'format' => ['decimal', ".$column->scale."],";
+        }
+        return '';
+    }
+
 }
