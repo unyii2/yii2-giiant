@@ -18,7 +18,7 @@
         "dmstr/yii2-helpers": "*",
         "dmstr/yii2-db": "*",
         "yiisoft/yii2": "~2.0.4",
-        "yiisoft/yii2-gii": "~2.0.4"
+        "yiisoft/yii2-gii": "2.0.7"
     },
     "autoload": {
         "psr-4": {
