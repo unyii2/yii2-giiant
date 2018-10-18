@@ -103,7 +103,9 @@ EOS;
     public function columnFormat($attribute, $model)
     {
         $modelClass = $this->generator->modelClass;
-        $camel_func = 'get'.str_replace(' ', '', ucwords(implode(' ', explode('_', $attribute)))).'ValueLabel';
+        $camel = str_replace(' ', '', ucwords(implode(' ', explode('_', $attribute))));
+        $camel_func = 'get'.$camel.'ValueLabel';
+        $camel_func_opts = 'opts'.$camel;
 
         if (!method_exists($modelClass::className(), $camel_func)) {
             return;
@@ -114,7 +116,8 @@ EOS;
                 'attribute'=>'{$attribute}',
                 'value' => function (\$model) {
                     return {$modelClass}::{$camel_func}(\$model->{$attribute});
-                }    
+                },
+                'filter' => {$modelClass}::{$camel_func_opts}()    
             ]        
 EOS;
     }

@@ -48,4 +48,23 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\
     {
         return parent::one($db);
     }
+
+    /**
+    * @param string $fieldName
+    * @param string $dateRange
+    * @return <?= $generator->queryNs ?>
+    */
+    public function andFilterWhereDateRange(string $fieldName, string $dateRange): self
+    {
+        if(!empty($dateRange)){
+            return $this;
+        }
+
+        $list = explode(' - ', $dateRange);
+        if(count($list) !== 2){
+            return $this;
+        }
+
+        return $this->andFilterWhere(['between', $fieldName, $list[0], $list[1]]);
+    }
 }
