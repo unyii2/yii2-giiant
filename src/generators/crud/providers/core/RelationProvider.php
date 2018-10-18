@@ -214,9 +214,8 @@ EOS;
     'value' => function (\$model) {
         if (\$rel = \$model->{$relationGetter}->one()) {
             return Html::a(\$rel->{$title}, ['{$route}', {$paramArrayItems}], ['data-pjax' => 0]);
-        } else {
-            return '';
         }
+        return '';
     },
     'format' => 'raw',
 ]

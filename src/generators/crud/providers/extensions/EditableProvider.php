@@ -394,10 +394,10 @@ EOS;
                 " . $this->getAlign($tableColumn) . "
                 " . $this->getDecimal($tableColumn) . "
             ]
-        ]';
+        ]";
             }
             //$code = $this->generator->columnFormat($attr, $model);
-            if ($code == false) {
+            if ($code === false) {
                 continue;
             }
             $columns .= $code.",\n";
