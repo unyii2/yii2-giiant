@@ -485,10 +485,14 @@ class Generator extends \yii\gii\generators\crud\Generator
                 . "\n" . str_repeat(' ', 12) . "])\n";
         }
         if (!empty($likeConditions)) {
-            $conditions .= str_repeat(' ', 12) . implode("\n" . str_repeat(' ', 12), $likeConditions) . ";\n";
+            $conditions .= str_repeat(' ', 12) . implode("\n" . str_repeat(' ', 12), $likeConditions) . "\n";
         }
         if (!empty($dateRangeConditions)) {
-            $conditions .= str_repeat(' ', 12) . implode("\n" . str_repeat(' ', 12), $dateRangeConditions) . ";\n";
+            $conditions .= str_repeat(' ', 12) . implode("\n" . str_repeat(' ', 12), $dateRangeConditions) . "\n";
+        }
+
+        if($conditions){
+            $conditions .= ';';
         }
 
         return [$conditions];

@@ -390,7 +390,7 @@ EOS;
                         '{$controller}/editable-column-update'
                     ]
                 ],
-                'inputType' => " . $inputType . "
+                'inputType' => " . $inputType . ",
                 " . $this->getAlign($tableColumn) . "
                 " . $this->getDecimal($tableColumn) . "
             ]
@@ -447,7 +447,7 @@ EOS;
             //        'firstPageLabel' => {$firstPageLabel},
             //        'lastPageLabel'  => {$lastPageLabel}
             //    ],
-                'columns' => [$columns]
+                'columns' => [{$columns}]
             ]);
 EOS;
 
@@ -467,7 +467,8 @@ EOS;
                 $inputType = 'Editable::INPUT_TEXT';
                 break;
             case 'text':
-                $inputType = 'Editable::INPUT_TEXTAREA ';
+                $inputType = 'Editable::INPUT_TEXTAREA';
+                break;
             case 'date':
             case 'datetime':
             case 'timestamp':
@@ -500,7 +501,7 @@ EOS;
 
     public function getDecimal($column) {
 
-        if ($column->type == 'decimal') {
+        if ($column->type === 'decimal') {
                 return "'format' => ['decimal', ".$column->scale."],";
         }
         return '';
