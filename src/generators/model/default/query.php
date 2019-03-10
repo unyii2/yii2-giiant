@@ -56,7 +56,7 @@ class <?= $className ?> extends <?= '\\' . ltrim($generator->queryBaseClass, '\\
     */
     public function andFilterWhereDateRange(string $fieldName, $dateRange): self
     {
-        if(!empty($dateRange)){
+        if(empty($dateRange)){
             return $this;
         }
 

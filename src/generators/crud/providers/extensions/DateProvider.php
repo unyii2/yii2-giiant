@@ -60,7 +60,7 @@ EOS;
     'filter' => '<div class="input-group drp-container">'
         .DateRangePicker::widget([
             'model' => \$searchModel,
-            'attribute' => '{$attribute}_range',
+            'attribute' => '{$attribute}',
             'presetDropdown'=>true,
             'convertFormat'=>true,
             'pluginOptions'=>[
