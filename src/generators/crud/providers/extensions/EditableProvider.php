@@ -276,12 +276,12 @@ EOS;
                 $hasDate = true;
                 $code = "
         [
-            'class' => '\kartik\grid\EditableColumn',
+            'class' => \kartik\grid\EditableColumn::class,
             'attribute' => '{$attribute}',
             'format' => 'date',                
             'editableOptions' => [
                 'inputType' => \kartik\\editable\Editable::INPUT_WIDGET,
-                'widgetClass' => 'kartik\datecontrol\DateControl',
+                'widgetClass' => kartik\datecontrol\DateControl::class,
                 'formOptions' => [
                     'action' => [
                         '{$controller}/editable-column-update'
