@@ -125,6 +125,31 @@ EOS;
 
                 ]
 EOS;
+        } elseif ('Editable::INPUT_DATE' === $inputType) {
+
+            return <<<EOS
+                [
+                    'attribute' => '{$attribute}',
+                    'format' => 'raw',
+                    'value' => Editable::widget([
+                        'name' => '{$attribute}',
+                        'asPopover' => true,
+                        'value' => \$model->{$attribute},
+                        'header' => \$model->getAttributeLabel('{$attribute}'),
+                        'inputType' => {$inputType},
+                        'size' => 'md',
+                        'options' => [
+                            'pluginOptions' => [
+                                'format' => 'yyyy-mm-dd',
+                            ]
+                         ],
+                        'ajaxSettings' => [
+                            'url' => Url::to(['editable', '{$primaryKey}' => \$model->primaryKey]),
+                        ],
+                    ]),
+
+                ]
+EOS;
         } else {
             return <<<EOS
                 [
@@ -470,6 +495,8 @@ EOS;
                 $inputType = 'Editable::INPUT_TEXTAREA';
                 break;
             case 'date':
+                $inputType = 'Editable::INPUT_DATE';
+                break;
             case 'datetime':
             case 'timestamp':
                 $inputType = 'Editable::INPUT_TEXT';
