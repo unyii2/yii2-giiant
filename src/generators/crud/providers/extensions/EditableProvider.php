@@ -497,6 +497,7 @@ EOS;
             case 'date':
                 $inputType = 'Editable::INPUT_DATE';
                 break;
+            case 'time':
             case 'datetime':
             case 'timestamp':
                 $inputType = 'Editable::INPUT_TEXT';
