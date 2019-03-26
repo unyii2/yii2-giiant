@@ -406,7 +406,6 @@ EOS;
             } else {
                 $code = "
         [
-            [
             'class' => '\kartik\grid\EditableColumn',
             'attribute' => '{$attribute}',
             'editableOptions' => [
@@ -432,15 +431,14 @@ EOS;
         // action column
         $columns .= "
         [    
-            'class' => '\kartik\grid\ActionColumn',
+            'class' => kartik\grid\ActionColumn::class,
             'template' => '{view} {update} {delete}',
-            'urlCreator' =>  
-                function(\$action, \$model, \$key, \$index) {
-                    \$params = is_array(\$key) ? \$key : ['id' => (string) \$key];
-                    \$params[0] = '{$controller}/' . \$action;
-                    \$params['{$model->formName()}'] = ['".key($relation->link)."' => \$model->primaryKey()[0]];
-                    return Url::toRoute(\$params);            
-                },
+            'urlCreator' => function(\$action, \$model, \$key, \$index) {
+                \$params = is_array(\$key) ? \$key : ['id' => (string) \$key];
+                \$params[0] = '{$controller}/' . \$action;
+                \$params['{$model->formName()}'] = ['".key($relation->link)."' => \$model->primaryKey()[0]];
+                return Url::toRoute(\$params);            
+            },
         ]            
                  ";
         $query = $showAllRecords ?
@@ -468,7 +466,7 @@ EOS;
                 ],               
 
             //    'pager'        => [
-            //        'class'          => yii\widgets\LinkPager::className(),
+            //        'class'          => yii\widgets\LinkPager::class,
             //        'firstPageLabel' => {$firstPageLabel},
             //        'lastPageLabel'  => {$lastPageLabel}
             //    ],

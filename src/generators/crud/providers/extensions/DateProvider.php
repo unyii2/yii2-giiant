@@ -17,7 +17,7 @@ class DateProvider extends \schmunk42\giiant\base\Provider
                 $this->generator->requires[] = 'kartik-v/yii2-datecontrol';
 
                 return <<<EOS
-\$form->field(\$model, '{$column->name}')->widget(DateControl::classname(), [
+\$form->field(\$model, '{$column->name}')->widget(DateControl::class, [
         'options' => [
             'class' => 'form-control',
             'pluginOptions' => [
