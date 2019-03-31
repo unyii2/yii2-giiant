@@ -26,7 +26,6 @@ echo "<?php\n";
 namespace <?= $generator->ns ?>\base;
 
 use Yii;
-use yii\db\Exception;
 <?php if (isset($translation)): ?>
 use dosamigos\translateable\TranslateableBehavior;
 <?php endif; ?>
@@ -74,15 +73,12 @@ if(!empty($enum)){
             echo '    public const ' . $enum_value['const_name'] . ' = \'' . $enum_value['value'] . '\';' . PHP_EOL;
         }
     }
-?>
-    var $enum_labels = false;
-<?php
 }
 ?>
     /**
      * @inheritdoc
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return '<?= $tableName ?>';
     }
@@ -137,7 +133,7 @@ if(!empty($enum)){
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         return [<?= "\n            " . implode(",\n            ", $rules) . "\n        " ?>];
     }
@@ -158,7 +154,7 @@ if(!empty($enum)){
     /**
      * @inheritdoc
      */
-    public function attributeHints()
+    public function attributeHints(): array
     {
         return array_merge(parent::attributeHints(), [
 <?php foreach ($hints as $name => $hint): ?>
@@ -230,7 +226,8 @@ foreach ($newRelRecord as $name => $newData): ?>
      * @param string $value
      * @return string
      */
-    public static function <?php echo $column_data['func_get_label_name']?>($value){
+    public static function <?php echo $column_data['func_get_label_name']?>($value): string
+    {
         $labels = self::<?php echo $column_data['func_opts_name']?>();
         if(isset($labels[$value])){
             return $labels[$value];
@@ -242,7 +239,7 @@ foreach ($newRelRecord as $name => $newData): ?>
      * column <?php echo $column_name?> ENUM value labels
      * @return array
      */
-    public static function <?php echo $column_data['func_opts_name']?>()
+    public static function <?php echo $column_data['func_opts_name']?>(): array
     {
         return [
 <?php
@@ -261,10 +258,4 @@ foreach ($newRelRecord as $name => $newData): ?>
 
 
 ?>
-    public function saveOrException($runValidation = true, $attributeNames = null)
-    {
-        if(!parent::save($runValidation, $attributeNames)){
-            throw new Exception(json_encode($this->getErrors()));
-        }
-    }
 }
