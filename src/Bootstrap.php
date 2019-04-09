@@ -56,6 +56,10 @@ class Bootstrap implements BootstrapInterface
                 $app->getModule('gii')->generators['giiant-roles'] = 'schmunk42\giiant\generators\roles\Generator';
             }
 
+            if (!isset($app->getModule('gii')->generators['giiant-command'])) {
+                $app->getModule('gii')->generators['giiant-command'] = 'schmunk42\giiant\generators\command\Generator';
+            }
+
             if ($app instanceof \yii\console\Application) {
                 $app->controllerMap['giiant-batch'] = 'schmunk42\giiant\commands\BatchController';
             }
