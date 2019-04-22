@@ -109,8 +109,8 @@ class Generator extends \yii\gii\Generator
      */
     public function validateModuleClass()
     {
-        if (strpos($this->moduleClass, '\\') === false || \Yii::getAlias('@' . str_replace('\\', '/', $this->moduleClass), false) === false) {
-            $this->addError('moduleClass', 'Module class must be properly namespaced.');
+        if (class_exists(!$this->moduleClass)) {
+            $this->addError('moduleClass', 'Module class not found.');
         }
         if (empty($this->moduleClass) || substr_compare($this->moduleClass, '\\', -1, 1) === 0) {
             $this->addError('moduleClass', 'Module class name must not be empty. Please enter a fully qualified class name. e.g. "app\\modules\\admin\\Module".');
@@ -164,8 +164,7 @@ EOD;
          * create gii/[name]GiiantRole.json with actual form data
          */
         $suffix = str_replace(' ', '', $this->getName());
-        $formDataDir = \Yii::getAlias('@'.str_replace('\\', '/', $this->moduleClass));
-        $formDataFile = StringHelper::dirname($formDataDir)
+        $formDataFile =$this->getModulePath()
             .'/gii'
             .'/'.$this->roleName.$suffix.'.json';
         $formData = json_encode(SaveForm::getFormAttributesValues($this, $this->formAttributes()));
@@ -178,7 +177,7 @@ EOD;
      */
     public function getModulePath()
     {
-        return \Yii::getAlias('@' . str_replace('\\', '/', substr($this->moduleClass, 0, strrpos($this->moduleClass, '\\'))));
+        return StringHelper::dirname((new \ReflectionClass($this->moduleClass))->getFileName());
     }
 
     public function getRoleNamespace(): string

@@ -11,6 +11,7 @@ namespace <?= $generator->getCommandNamespace() ?>;
 
 use yii\console\Controller;
 use yii\console\ExitCode;
+use yii\db\Connection;
 
 class <?=$generator->getCommandClassName()?> extends Controller
 {
