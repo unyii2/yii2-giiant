@@ -98,11 +98,11 @@ class Generator extends \yii\gii\Generator
     public function validateModuleClass()
     {
 
-        if (class_exists(!$this->moduleClass)) {
-            $this->addError('moduleClass', 'Module class not found.');
-        }
         if (empty($this->moduleClass) || substr_compare($this->moduleClass, '\\', -1, 1) === 0) {
             $this->addError('moduleClass', 'Module class name must not be empty. Please enter a fully qualified class name. e.g. "app\\modules\\admin\\Module".');
+        }
+        if (!class_exists($this->moduleClass)) {
+            $this->addError('moduleClass', 'Module class not found.');
         }
     }
 
